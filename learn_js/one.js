@@ -136,4 +136,14 @@ let checkPerson = function () {
     }
 };
 
-checkPerson();
+
+
+
+let s = '0123456789';
+let s1 = s.substr(2,6);
+let s2 = s.slice(1, 6);
+
+console.log(s1);
+console.log(s2);
+
+
