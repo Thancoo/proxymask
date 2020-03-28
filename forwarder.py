@@ -7,7 +7,7 @@
 import sys
 import asyncio
 import traceback
-from parser import stream
+# from parser import stream
 from typing import Optional
 
 
