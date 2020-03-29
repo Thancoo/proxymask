@@ -1,7 +1,7 @@
 $.ajax({
     type: 'GET',
     url:'https://www.tianqiapi.com/api/',
-    data:'version=v1&city=兴义',
+    data:'version=v1&city=贵阳',
     dataType: 'JSON',
     error: function () {
         alert('Error');
