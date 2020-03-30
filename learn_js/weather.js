@@ -13,4 +13,4 @@ $.ajax({
         weather.append('<li>Weather: ' + res.data[0].wea + '</li>');
         weather.append('<li>Tips: ' + res.data[0].air_tips + '</li>');
     }
-})
+});
