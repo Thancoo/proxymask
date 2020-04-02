@@ -9,13 +9,10 @@
 def func():
     a = '123'
     b = 123
-
-    print(type(a))
-    print(type(b))
-    print(f'{a}, {b}')
+    return a, b
 
 
 if __name__ == '__main__':
-    func()
-    c = 0o10
-    print(c)
+    b = func()
+    print(isinstance(b, set))
+    print(isinstance(b, tuple))

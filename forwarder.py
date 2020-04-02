@@ -4,11 +4,13 @@
 # @File     : forwarder.py
 # @IDE      : PyCharm
 
+
 import sys
 import asyncio
 import traceback
-# from parser import stream
+from parser import stream
 from typing import Optional
+from replace import simulation
 
 
 class ConnectionProtocol(asyncio.Protocol):
@@ -38,7 +40,6 @@ class ForwarderProtocol(asyncio.Protocol):
         self.remote_port = remote_port
         self.transport = None
         self.connection_protocol = None
-        self.parser = stream.BytesStream()
 
     def connection_made(
             self, transport: asyncio.transports.WriteTransport
@@ -58,7 +59,7 @@ class ForwarderProtocol(asyncio.Protocol):
     def data_received(self, data: bytes) -> None:
         print('\nReceived(raw):\n', data)
         print('LenData:\n', len(data))
-        new_data = self.process_data(data)
+        new_data = self.fix_packet(data)
 
         if self.connection_protocol.transport is None:
             self.connection_protocol.buffer.append(new_data)
@@ -68,20 +69,19 @@ class ForwarderProtocol(asyncio.Protocol):
     def connection_lost(self, exc: Optional[Exception]) -> None:
         self.connection_protocol.transport.close()
 
-    def process_data(self, data):
-        obj = self.parser.distribute(data)
-        if isinstance(obj, bytes):
-            return data
-        if isinstance(obj, set):
-            packet, res = obj
-            # (r, [])
-            if isinstance(res, list):
-                pass
-            # (r, {})
-            if isinstance(res, dict):
-                pass
+    @staticmethod
+    def fix_packet(packet: bytes) -> bytes:
+        obj = stream.Stream(packet)
+        res = obj.distribute()
 
-        return data
+        # 需要做修改，进行语句替换
+        if isinstance(obj, tuple):
+            stmt, obj = res
+            new_obj = simulation.ReplaceDemo(db=obj)
+            new_stmt = new_obj.random(sql=stmt, length=1000)
+            return obj.construct(sql=new_stmt)
+
+        return packet
 
 
 def main() -> None:
@@ -130,4 +130,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-

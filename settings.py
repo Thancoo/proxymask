@@ -1,9 +1,15 @@
-oracle = {
-    'pass_kws': ['DUAL', '$SYS.'],
-    'statements': [
-        """select * from zx_table""",
-        """select id, name, address from zx_table""",
-    ],
+# Common
+
+LIMIT_LENGTH = 20
 
 
-}
+# Oracle
+
+# PgSQL
+
+
+# MySQL
+
+MYSQL_SYS_DATABASES = ['information_schema','mysql','performance_schema','test','scan_result']
+
+

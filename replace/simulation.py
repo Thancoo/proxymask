@@ -12,18 +12,16 @@ import settings
 
 
 class ReplaceDemo:
-    def __init__(self, db_type):
-        self.db_type = db_type
+    def __init__(self, db):
+        self.db = db
         self.sql = str()
 
     def random(self, sql, length=0):
-        ret = random.choice(settings.oracle['statements'])
-        return
+        pass
 
     def format_length(self, sql, length):
         if length < len(self.sql) + 4:
             return
-
 
         pass
 
