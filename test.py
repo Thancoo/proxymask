@@ -6,13 +6,25 @@
 # @Software : PyCharm
 
 
-def func():
-    a = '123'
-    b = 123
-    return a, b
+from settings import PGSQL_PASS_KEYS
+from tools import character
+from analysis.stream import Stream
+from aaa import test
+from aaa import one
+from api import one as aa
+from analysis import gg
 
 
-if __name__ == '__main__':
-    b = func()
-    print(isinstance(b, set))
-    print(isinstance(b, tuple))
+
+
+
+
+b = b'\0xffhello, world'
+a = character.bytes2string(b)
+
+print(test.Test)
+print(one.Test)
+print(aa.One)
+print(gg.GoodGame)
+print(Stream)
+

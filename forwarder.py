@@ -8,7 +8,7 @@
 import sys
 import asyncio
 import traceback
-from parser import stream
+from analysis import stream
 from typing import Optional
 from replace import simulation
 
@@ -77,52 +77,53 @@ class ForwarderProtocol(asyncio.Protocol):
         # 需要做修改，进行语句替换
         if isinstance(obj, tuple):
             stmt, obj = res
-            new_obj = simulation.ReplaceDemo(db=obj)
-            new_stmt = new_obj.random(sql=stmt, length=1000)
-            return obj.construct(sql=new_stmt)
+            rep_obj = simulation.ReplaceDemo(db=obj)
+            new_stmt = rep_obj.random(sql=stmt, length=1000)
+            data =  obj.construct(sql=new_stmt)
+            print(data)
 
         return packet
 
 
 def main() -> None:
     loop = asyncio.get_event_loop()
-    oracle_coroutine = loop.create_server(
-        lambda: ForwarderProtocol(
-            remote_host='192.168.1.116',
-            remote_port=1521
-        ),
-        host='127.0.0.1',
-        port=1522
-    )
+    # oracle_coroutine = loop.create_server(
+    #     lambda: ForwarderProtocol(
+    #         remote_host='192.168.1.116',
+    #         remote_port=1521
+    #     ),
+    #     host='127.0.0.1',
+    #     port=1522
+    # )
 
     pgsql_coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host='192.168.1.182',
-            remote_port=5555
-        ),
-        host='127.0.0.1',
-        port=5555
-    )
-
-    mysql_coroutine = loop.create_server(
-        lambda: ForwarderProtocol(
             remote_host='192.168.1.180',
-            remote_port=3306
+            remote_port=5432
         ),
         host='127.0.0.1',
-        port=3306
+        port=5431
     )
-    server1 = loop.run_until_complete(oracle_coroutine)
-    server2 = loop.run_until_complete(pgsql_coroutine)
-    server3 = loop.run_until_complete(mysql_coroutine)
 
-    print(f'Server on {server1.sockets[0].getsockname()}')
+    # mysql_coroutine = loop.create_server(
+    #     lambda: ForwarderProtocol(
+    #         remote_host='192.168.1.180',
+    #         remote_port=3306
+    #     ),
+    #     host='127.0.0.1',
+    #     port=3306
+    # )
+    # server1 = loop.run_until_complete(oracle_coroutine)
+    server2 = loop.run_until_complete(pgsql_coroutine)
+    # server3 = loop.run_until_complete(mysql_coroutine)
+
+    # print(f'Server on {server1.sockets[0].getsockname()}')
     print(f'Server on {server2.sockets[0].getsockname()}')
-    print(f'Server on {server3.sockets[0].getsockname()}')
+    # print(f'Server on {server3.sockets[0].getsockname()}')
     try:
-        loop.run_until_complete(server1.wait_closed())
+        # loop.run_until_complete(server1.wait_closed())
         loop.run_until_complete(server2.wait_closed())
-        loop.run_until_complete(server3.wait_closed())
+        # loop.run_until_complete(server3.wait_closed())
     except KeyboardInterrupt as ki:
         sys.stderr.flush()
         traceback.print_exc(ki)

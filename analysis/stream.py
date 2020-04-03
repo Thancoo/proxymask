@@ -7,8 +7,8 @@
 
 import settings
 
-from parser import pgsql
-from parser import mysql
+from analysis import pgsql
+from analysis import mysql
 
 
 class Stream:
@@ -24,8 +24,7 @@ class Stream:
             # pgsql
             if self.get_database == 'pgsql':
                 obj = pgsql.BasePgSQLParser(packet=self.packet)
-                is_pass = obj.exclude()
-                if is_pass:
+                if obj.exclude():
                     return self.packet
                 statement = obj.get_sql()
                 return statement, obj

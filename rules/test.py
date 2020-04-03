@@ -13,9 +13,9 @@ import re
 def check_secret(value):
     phone_pattern = '^((13[0-9])|(14[5,7,9])|(15[^4])|(18[0-9])|(17[0,1,3,5,6,7,8]))\\d{8}$'  # 匹配手机号码
     if re.match(phone_pattern, value):
-        return ('secret_phone')  # 标记字段是否涉密，以及涉密类型(如姓名、手机号码、地址、身份证号码、银行卡号)
+        return 'secret_phone'  # 标记字段是否涉密，以及涉密类型(如姓名、手机号码、地址、身份证号码、银行卡号)
     else:
-        return ('no_secret')
+        return 'no_secret'
 
 
 class DB(object):
