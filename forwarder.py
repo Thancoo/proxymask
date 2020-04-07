@@ -71,15 +71,22 @@ class ForwarderProtocol(asyncio.Protocol):
 
     @staticmethod
     def fix_packet(packet: bytes) -> bytes:
-        obj = stream.Stream(packet)
-        res = obj.distribute()
+        print('AAA')
+        stream_obj = stream.Stream(packet)
+        res = stream_obj.distribute()
 
         # 需要做修改，进行语句替换
-        if isinstance(obj, tuple):
-            stmt, obj = res
-            rep_obj = simulation.ReplaceDemo(db=obj)
-            new_stmt = rep_obj.random(sql=stmt, length=1000)
-            data =  obj.construct(sql=new_stmt)
+        print('DDD', res)
+        if isinstance(res, tuple):
+            print('TUP')
+            stmt, parser_obj = res
+
+            # rep_obj = simulation.ReplaceDemo(db=obj)
+            # new_stmt = rep_obj.random(sql=stmt, length=1000)
+
+            new_stmt = '''SELECT "id", "course", "company" FROM "my_schema"."data_course" WHERE "id"<8207700'''
+            data = parser_obj.construct(sql=new_stmt)
+            print('REPR:', repr(data))
             print(data)
 
         return packet

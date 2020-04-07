@@ -11,9 +11,9 @@ def default_sql(sql: str, keyword_case='upper', strip_comments=True) -> str:
     ).strip().replace(chr(10), chr(32))
 
 
-def determine_index(data: str) -> int:
-    select = data.upper().find('SELECT')
-    create = data.upper().find('CREATE')
+def determine_index(data: bytes) -> int:
+    select = data.upper().find(b'SELECT')
+    create = data.upper().find(b'CREATE')
     if select != -1 and create != -1:
         if select < create:
             return select

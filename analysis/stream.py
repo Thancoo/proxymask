@@ -15,7 +15,7 @@ class Stream:
 
     def __init__(self, packet: bytes) -> None:
         self.packet = packet
-        self.data = self.packet.decode('utf-8')
+
 
     def distribute(self) -> (tuple, str):
         if len(self.packet) < settings.LIMIT_LENGTH:
@@ -27,6 +27,7 @@ class Stream:
                 if obj.exclude():
                     return self.packet
                 statement = obj.get_sql()
+                print('CCC:', statement, obj)
                 return statement, obj
 
             # mysql

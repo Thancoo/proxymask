@@ -7,7 +7,7 @@
 
 import logging
 
-logging.critical('aaa')
+logging.critical('blues')
 
 
 

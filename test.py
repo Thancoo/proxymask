@@ -9,8 +9,8 @@
 from settings import PGSQL_PASS_KEYS
 from tools import character
 from analysis.stream import Stream
-from aaa import test
-from aaa import one
+from blues import test
+from blues import one
 from api import one as aa
 from analysis import gg
 

@@ -14,3 +14,5 @@ if __name__ == '__main__':
     b = b'Hello, world\x90\xff'
     print(bytes2string(b))
     print(len(bytes2string(b)))
+
+
