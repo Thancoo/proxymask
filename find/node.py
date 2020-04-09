@@ -5,7 +5,15 @@
 # @IDE      : PyCharm
 
 
+import pymysql
 
+
+conn = pymysql.connect(
+    host='192.168.1.180',
+    user='root',
+    password='123456',
+    database='mysql'
+)
 
 
 

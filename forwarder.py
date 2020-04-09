@@ -88,6 +88,7 @@ class ForwarderProtocol(asyncio.Protocol):
             data = parser_obj.construct(sql=new_stmt)
             print('REPR:', repr(data))
             print(data)
+            packet = data
 
         return packet
 

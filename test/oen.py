@@ -20,5 +20,12 @@ else:
 print('ss'.encode() + 'hello'.encode())
 
 data = b'hello'
-print(data[0])
-print(type(data[0]))
+data = data + bytes([66])
+print(data)
+print(data[:2])
+print(bytes([data[0]]))
+
+new_stmt = '''SELECT "id", "course", "company" FROM "my_schema"."data_course" WHERE "id"<8207700'''
+print(new_stmt.encode())
+
+

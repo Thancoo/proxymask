@@ -16,7 +16,6 @@ class Stream:
     def __init__(self, packet: bytes) -> None:
         self.packet = packet
 
-
     def distribute(self) -> (tuple, str):
         if len(self.packet) < settings.LIMIT_LENGTH:
             return

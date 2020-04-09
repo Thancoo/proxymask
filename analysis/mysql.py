@@ -6,12 +6,24 @@
 # @Software : PyCharm
 
 
-class MysqlParser:
-    def __init__(self):
-        self.packet = bytes()
-        self.index = int()
+import settings
+from tools import other
+from tools import algorithm
 
-    def statement(self, packet):
-        pass
+
+class BaseMysqlParser:
+    def __init__(self, packet:bytes):
+        self.packet = packet
+        self.type = None
+
+    def exclude(self) -> bool:
+        passes = [i.encode().upper() for i in settings.MYSQL_PASS_KEYS]
+        if any(i in self.packet.upper() for i in passes):
+            return True
+
+    def determine_type(self) -> (int, int):
+        index = other.determine_index(self.packet)
+        self.type = index
+        # if self.type == 6 and self.
 
 

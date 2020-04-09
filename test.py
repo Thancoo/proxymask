@@ -28,3 +28,28 @@ print(aa.One)
 print(gg.GoodGame)
 print(Stream)
 
+from queue import Queue, LifoQueue, PriorityQueue
+
+q = Queue(maxsize=5)
+lq = LifoQueue(maxsize=6)
+pq = PriorityQueue(maxsize=5)
+
+for i in range(5):
+    q.put(i)
+    lq.put(i)
+    pq.put(i)
+
+print(q)
+print(lq)
+print(pq)
+print(q.full())
+print(q.put(3))
+print(q.full())
+
+
+
+
+
+
+
+

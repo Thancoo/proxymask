@@ -6,7 +6,6 @@
 
 
 import settings
-from tools import character
 from tools import other
 from tools import algorithm
 
@@ -15,14 +14,11 @@ class BasePgSQLParser:
 
     def __init__(self, packet: bytes):
         self.packet = packet
-        self.data = character.bytes2string(self.packet).upper()
         self.type = None
-        pass
 
     def exclude(self) -> bool:
-        if any(i in self.packet.upper() for i in
-               [i.encode().upper() for i in settings.PGSQL_PASS_KEYS]):
-            print('TTT')
+        passes = [i.encode().upper() for i in settings.PGSQL_PASS_KEYS]
+        if any(i in self.packet.upper() for i in passes):
             return True
 
     def determine_type(self) -> (int, int):
@@ -34,7 +30,7 @@ class BasePgSQLParser:
 
     def get_sql(self):
         """
-        取到 statement
+        Get statement
         :return:
         """
         pre, pos = self.determine_type()
@@ -52,6 +48,7 @@ class BasePgSQLParser:
             sql = sql[:-1]
         default_sql = other.default_sql(sql)
         if self.type == 6:
+            self.type = None
             return self.sub_construct_one(default_sql)
         pass
 
@@ -61,8 +58,8 @@ class BasePgSQLParser:
         :param sql:
         :return:
         """
-        s_one = self.packet[0]
-        s_thr = self.packet[5]
+        s_one = bytes([self.packet[0]])
+        s_thr = bytes([self.packet[5]])
         s_pos = self.packet[-38:]
 
         l_two = algorithm.number2bytes(
@@ -77,5 +74,5 @@ class BasePgSQLParser:
         return packet
 
     @property
-    def info(self):
+    def database(self):
         return 'pgsql'
