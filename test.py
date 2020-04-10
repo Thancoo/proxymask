@@ -39,12 +39,33 @@ for i in range(5):
     lq.put(i)
     pq.put(i)
 
-print(q)
-print(lq)
-print(pq)
-print(q.full())
-print(q.put(3))
-print(q.full())
+
+from phone import Phone
+
+p = Phone()
+a = p.find(18518920100)
+print(a)
+
+
+import ngender
+
+
+
+from  pypinyin import Style, pinyin
+
+a = pinyin('调情，拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识')
+print(a)
+
+s = str()
+for i in a:
+    s += i[0] + ' '
+print(s)
+
+
+
+
+
+
 
 
 

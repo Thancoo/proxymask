@@ -23,6 +23,23 @@ def determine_index(data: bytes) -> int:
     return -1
 
 
+class Extractor:
+    def __init__(self, sql_statement):
+        self.sql = sqlparse.format(
+            sql=sql_statement,
+            reindent=True,
+            keyword_case='upper'
+        )
+        self._table_names = set()
+        self._alias_names = set()
+        self._limit = None
+        self._parsed = sqlparse.parse()
+
+    def strip(self):
+        return self.sql.strip(' \t\n')
+
+
+
 if __name__ == '__main__':
     index = determine_index('acreatsesdfsdfsafasselect * from table')
     print(index)
