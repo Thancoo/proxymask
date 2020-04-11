@@ -9,7 +9,7 @@ class One:
 
     def __init__(self):
         """
-        
+        Hello
         """
         pass
 
