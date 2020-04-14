@@ -23,7 +23,6 @@ print(random.randint(1, 2))
 
 def int2string(number: int, length: int) -> str:
     s = str(number)
-    print(s)
     if len(s) < length:
         return chr(48) * (length - len(s)) + s
     return s
@@ -55,13 +54,13 @@ def birth(age: int, scope: int, mode=0) -> str:
 
 
 def id_card(year: int, scope: int, mode=0) -> str:
-    b = birth(18, 20)
-    print()
+    b = birth(year, scope, mode)
+    print(b)
     return '123'
 
 
 if __name__ == '__main__':
-    birth(18, 2, 0)
-    print(is_leap_year(3 * 100))
-    print(int2string(12, 2))
-    print(birth(26, 20, 0))
+    for i in range(10):
+        print(id_card(25,2))
+
+

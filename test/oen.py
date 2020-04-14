@@ -7,25 +7,18 @@
 
 import settings
 
-data = b"P\x00\x00\x01[\x00SELECT nspname AS TABLE_SCHEM, NULL AS TABLE_CATALOG FROM pg_catalog.pg_namespace  WHERE nspname <> 'pg_toast' AND (nspname !~ '^pg_temp_'  OR nspname = (pg_catalog.current_schemas(true))[1]) AND (nspname !~ '^pg_toast_temp_'  OR nspname = replace((pg_catalog.current_schemas(true))[1], 'pg_temp_', 'pg_toast_temp_'))  ORDER BY TABLE_SCHEM\x00\x00\x00B\x00\x00\x00\x0c\x00\x00\x00\x00\x00\x00\x00\x00D\x00\x00\x00\x06P\x00E\x00\x00\x00\t\x00\x00\x00\x00\x00S\x00\x00\x00\x04"
-lst = [i.encode().upper() for i in settings.PGSQL_PASS_KEYS]
-print(lst)
+a = '\x00E\x00R\x00P\x00\x1fu\xa7ND\x8d\x99e(u7b\x93^'
+# a = '\x00 E\x00 R\x00 P\x00  \x1fu \xa7N D\x8d  \x99e  (u  7b  \x93^'
+print(a.encode('utf-8'))
+print(a)
+print(len(a))
+# print(a.encode('utf-8'))
+# print(a.encode('gbk'))
+
+c = u'生产资料用户库'
+print(c.encode())
+print(ord('u'))
 
 
-if any(i in data.upper() for i in lst):
-    print(True)
-else:
-    print(False)
-
-print('ss'.encode() + 'hello'.encode())
-
-data = b'hello'
-data = data + bytes([66])
-print(data)
-print(data[:2])
-print(bytes([data[0]]))
-
-new_stmt = '''SELECT "id", "course", "company" FROM "my_schema"."data_course" WHERE "id"<8207700'''
-print(new_stmt.encode())
 
 

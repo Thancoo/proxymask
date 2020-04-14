@@ -88,3 +88,4 @@ if __name__ == '__main__':
     h.connect()
     data = h.fetch_all('select * from appuser')
     print(data)
+

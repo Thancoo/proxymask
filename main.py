@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2020/3/24 10:19 下午
 # @Author   : vadon
-# @File     : main.py
+# @File     : person.py
 # @Software : PyCharm
 
 
