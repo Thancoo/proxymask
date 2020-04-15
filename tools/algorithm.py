@@ -7,7 +7,13 @@
 # @Software : PyCharm
 
 
-def number2bytes(number: int, length:int, reverse=False) -> bytes:
+import re
+
+HEADLINE_DISPLAY = True
+
+
+# BYTES
+def number2bytes(number: int, length: int, reverse=False) -> bytes:
     """
     Change a number to its hexadecimal native bytes
     :param number: The number
@@ -25,4 +31,57 @@ def number2bytes(number: int, length:int, reverse=False) -> bytes:
     return bytes(lst)
 
 
+def bytes2number(byte: bytes):
+    pass
 
+
+def list2dict(l1: list, l2: list, reverse=False) -> dict:
+    if l1 is None:
+        l1 = list()
+    if l2 is None:
+        l2 = list()
+    if not reverse:
+        return dict(zip(l1, l2))
+    return dict(zip(l2, l1))
+
+
+def random_words(length: int, mode: int) -> str:
+    pass
+
+
+def split_string_by_length(string: str, length: int) -> list:
+    """
+    Split string by length
+    :param string:
+    :param length:
+    :return:
+    """
+    regex = re.compile(r'.{%d}' % length, re.DOTALL)
+    lst = re.findall(regex, string)
+    lst.append(string[(len(lst) * length):])
+    return lst
+
+
+def headline(header: str, separator='-', length=80):
+    """
+    Dividing line of separating program running steps by string
+    :param header: string you want to separate
+    :param separator: Separator symbols
+    :param length: the length of the dividing line
+    :return: None
+    """
+    if len(header) > length - 4:
+        header = 'DEFAULT'
+    if HEADLINE_DISPLAY:
+        line_num = (length - len(header) - 2) // 2
+        print(
+            separator * line_num + chr(32) + header + chr(32) + separator * (
+                    length - line_num - 2 - len(header)
+            )
+        )
+
+
+if __name__ == '__main__':
+    lst1 = [1, 2, 3, 4]
+    lst2 = ['a', 'b', 'c', 'd']
+    print(list2dict(lst1, lst2, True))
