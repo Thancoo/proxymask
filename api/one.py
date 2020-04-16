@@ -9,8 +9,14 @@ class One:
 
     def __init__(self):
         """
-        Hello 1·11
+        Hello 1·1112
         """
         pass
 
-    pass
+    def info(self):
+        print(self)
+
+
+if __name__ == '__main__':
+    o = One()
+    o.info()
