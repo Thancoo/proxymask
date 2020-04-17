@@ -56,7 +56,7 @@ class MySQLHelper:
             self.close()
         return data_all
 
-    def __item(self, sql, params=None):
+    def _item(self, sql, params=None):
         count = 0
         try:
             count = self.cur.execute(sql, params)
@@ -68,13 +68,13 @@ class MySQLHelper:
         return count
 
     def update(self, sql, params=None):
-        return self.__item(sql, params)
+        return self._item(sql, params)
 
     def insert(self, sql, params=None):
-        return self.__item(sql, params)
+        return self._item(sql, params)
 
     def delete(self, sql, params=None):
-        return self.__item(sql, params)
+        return self._item(sql, params)
 
     def close(self):
         if self.cur is not None:

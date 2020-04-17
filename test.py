@@ -61,6 +61,15 @@ for i in a:
     s += i[0] + ' '
 print(s)
 
+from make import one
+
+h = one.MySQLHelper(host='192.168.1.181', user='root', password='123456', database='db_mask')
+h.connect()
+
+
+
+
+
 
 
 

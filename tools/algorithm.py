@@ -8,6 +8,7 @@
 
 
 import re
+import random
 
 HEADLINE_DISPLAY = True
 
@@ -16,11 +17,11 @@ HEADLINE_DISPLAY = True
 def number2bytes(number: int, length: int, reverse=False) -> bytes:
     """
     Change a number to its hexadecimal native bytes
-    :param number: The number
+    :param number: the number
     :param length: the length of out, fixed-digit digits zeroing at high digits
     if necessary
-    :param reverse: Big or Little end code
-    :return: Raw length bytes
+    :param reverse: big or little end code
+    :return: raw length bytes
     """
     lst = list()
     for i in range(0, length):
@@ -45,8 +46,27 @@ def list2dict(l1: list, l2: list, reverse=False) -> dict:
     return dict(zip(l2, l1))
 
 
-def random_words(length: int, mode: int) -> str:
-    pass
+def random_words(length=4, mode=0) -> str:
+    """
+
+    :param length:
+    :param mode:
+    :return:
+    """
+    if length <= 0:
+        length = random.randint(1, 16)
+    words = list()
+    uppers = [i for i in range(65, 91)]
+    lowers = [i for i in range(97, 123)]
+    if mode == 0:
+        lst = lowers
+    elif mode == 1:
+        lst = uppers
+    else:
+        lst = uppers + lowers
+    for i in range(length):
+        words.append(chr(random.choice(lst)))
+    return str().join(words)
 
 
 def split_string_by_length(string: str, length: int) -> list:
@@ -66,7 +86,7 @@ def headline(header: str, separator='-', length=80):
     """
     Dividing line of separating program running steps by string
     :param header: string you want to separate
-    :param separator: Separator symbols
+    :param separator: separator symbols
     :param length: the length of the dividing line
     :return: None
     """
@@ -82,6 +102,5 @@ def headline(header: str, separator='-', length=80):
 
 
 if __name__ == '__main__':
-    lst1 = [1, 2, 3, 4]
-    lst2 = ['a', 'b', 'c', 'd']
-    print(list2dict(lst1, lst2, True))
+    a = random_words()
+    print(a)

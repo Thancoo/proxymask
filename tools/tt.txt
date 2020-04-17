@@ -1,0 +1,10 @@
+docker pull daocloud.io/library/mysql:5.7
+
+
+
+docker run -p 3306:3306 --name mysql5.6 -e MYSQL_ROOT_PASSWORD=123456 -d c216
+
+docker run -p 3307:3306 --name mysql5.7 -e MYSQL_ROOT_PASSWORD=123456 -d 413b
+
+docker run -p 3308:3306 --name mariadb -e MYSQL_ROOT_PASSWORD=123456 -d 37f5
+

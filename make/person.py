@@ -6,8 +6,26 @@
 
 
 class BasePerson:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        if 'name' in kwargs:
+            self.name = kwargs['name']
+
         pass
 
     def name(self):
         pass
+
+    def phone(self):
+        pass
+
+    def mobile_phone(self):
+        pass
+
+    def gender(self, mode=0):
+        if mode:
+            return 111
+
+
+        pass
+
