@@ -6,6 +6,9 @@ LIMIT_LENGTH = 20
 # 处理语句类型
 QUERY_KEYS = ['select', 'from']
 
+# 0 info
+LEVEL = 0
+
 # Oracle
 
 # PgSQL
