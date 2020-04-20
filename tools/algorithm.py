@@ -101,6 +101,9 @@ def headline(header: str, separator='-', length=80):
         )
 
 
+def bytes2string(packet: bytes) -> str:
+    return packet.decode(encoding='utf-8', errors='ignore')
+
 if __name__ == '__main__':
     a = random_words()
     print(a)

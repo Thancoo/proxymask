@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @Time     : 2020/4/9 17:22
-# @File     : common.py
+# @File     : connect.py
 # @IDE      : PyCharm
 
 
@@ -23,6 +23,7 @@ class Cursor:
         if 'database' in options:
             self.database = options['database']
 
+
     def connnect(self):
         if self.type == 'pgsql':
             conn = pg.connect(
@@ -34,8 +35,13 @@ class Cursor:
             )
             return conn.cursor()
     # https://www.cnblogs.com/ryanzheng/p/9693511.html
-    def create_table(self, cursor):
+    def execute(self, statement):
+
         pass
+
+    def close(self):
+        pass
+
 
 
 

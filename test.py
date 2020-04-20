@@ -7,7 +7,7 @@
 
 
 from settings import PGSQL_PASS_KEYS
-from tools import character
+from tools import other
 from analysis.stream import Stream
 from blues import test
 from blues import one
@@ -20,7 +20,7 @@ from analysis import gg
 
 
 b = b'\0xffhello, world'
-a = character.bytes2string(b)
+a = other.bytes2string(b)
 
 print(test.Test)
 print(one.Test)
