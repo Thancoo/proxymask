@@ -12,7 +12,8 @@ class One:
         Hello 1·1112
         test node
         test node2
-        """
+        test node3
+               """
         pass
 
     def info(self):
