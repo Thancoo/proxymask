@@ -23,3 +23,7 @@ class Key:
 
     def hash_code(self):
         pass
+
+    @classmethod
+    def __prepare__(metacls, name, bases):
+        pass
