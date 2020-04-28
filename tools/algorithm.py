@@ -23,6 +23,7 @@ def number2bytes(number: int, length: int, reverse=False) -> bytes:
     :param reverse: big or little end code
     :return: raw length bytes
     """
+
     lst = list()
     for i in range(0, length):
         lst.append(number >> (i * 8) & 0xff)
