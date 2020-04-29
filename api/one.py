@@ -13,6 +13,7 @@ class One:
         test node
         test node2
         test node3
+        test node4
                """
         pass
 
