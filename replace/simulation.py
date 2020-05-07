@@ -19,7 +19,7 @@ class ReplaceDemo:
     def random(self, sql, length=0):
         pass
 
-    def format_length(self, sql, length):
+    def format_length(self, statement: str, length: int) -> None:
         if length < len(self.sql) + 4:
             return
 

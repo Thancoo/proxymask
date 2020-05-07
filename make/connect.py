@@ -23,8 +23,7 @@ class Cursor:
         if 'database' in options:
             self.database = options['database']
 
-
-    def connnect(self):
+    def connect(self):
         if self.type == 'pgsql':
             conn = pg.connect(
                 database=self.database,
@@ -34,6 +33,7 @@ class Cursor:
                 port=self.port
             )
             return conn.cursor()
+
     # https://www.cnblogs.com/ryanzheng/p/9693511.html
     def execute(self, statement):
 
@@ -41,10 +41,6 @@ class Cursor:
 
     def close(self):
         pass
-
-
-
-
 
 
 if __name__ == '__main__':
