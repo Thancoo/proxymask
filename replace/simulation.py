@@ -27,5 +27,6 @@ class ReplaceDemo:
 
 
 if __name__ == '__main__':
+    print('Hello, world')
     lst = [1, 2, 3, 4]
     print(random.choices(lst, k=2))
