@@ -7,7 +7,11 @@
 
 import toml
 
-my_file = './config/my.toml'
+my_file = 'settings/my.toml'
 a = toml.load(my_file)
 print(type(a))
 print(a)
+
+l = 1
+
+print(bytes(l))

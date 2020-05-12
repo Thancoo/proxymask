@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time     : 2020/4/3 11:29
-# @File     : server.py
+# @File     : parse.py
 # @IDE      : PyCharm
 
 server = {

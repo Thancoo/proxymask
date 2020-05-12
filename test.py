@@ -7,10 +7,10 @@
 
 
 from settings import PGSQL_PASS_KEYS
-from tools import other
+from tools import net
 from analysis.stream import Stream
-from blues import test
-from blues import one
+from oracle import test
+from oracle import one
 from api import one as aa
 from analysis import gg
 
@@ -106,6 +106,8 @@ import json
 print(json.loads(dd))
 
 
+
+print(bytes(1))
 
 
 

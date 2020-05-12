@@ -7,8 +7,8 @@
 
 
 import settings
-from tools import statement
-from tools import algorithm
+from tools import fmt
+from tools import forge
 
 
 class BaseMysqlParser:
@@ -22,7 +22,7 @@ class BaseMysqlParser:
             return True
 
     def determine_type(self) -> (int, int):
-        index = statement.determine_index(self.packet)
+        index = fmt.determine_index(self.packet)
         self.type = index
         # if self.type == 6 and self.
 

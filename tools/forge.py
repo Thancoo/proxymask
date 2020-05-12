@@ -3,7 +3,7 @@
 # @Time     : 2020/3/24 8:46 下午
 # @Author   : vadonical
 # @Email    : vadonical@gmail.com
-# @File     : algorithm.py
+# @File     : pgsql.py
 # @Software : PyCharm
 
 
@@ -11,6 +11,21 @@ import re
 import random
 
 HEADLINE_DISPLAY = True
+
+
+# determine index
+
+def determine_index(packet: bytes) -> int:
+    """
+    
+    :param packet:
+    :return:
+    """
+    select_index = packet.upper().find(bytes('SELECT'))
+    create_index = packet.upper().find(bytes('CREATE'))
+    if create_index != -1 and create_index < select_index:
+        return create_index
+    return select_index
 
 
 # BYTES

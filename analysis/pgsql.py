@@ -6,8 +6,8 @@
 
 
 import settings
-from tools import statement
-from tools import algorithm
+from tools import fmt
+from tools import forge
 
 
 class BasePgSQLParser:
@@ -22,7 +22,7 @@ class BasePgSQLParser:
             return True
 
     def determine_type(self) -> (int, int):
-        index = statement.determine_index(self.packet)
+        index = fmt.determine_index(self.packet)
         self.type = index
         if self.type == 6 and self.packet[-1] == 4:
             return 6, -38
@@ -46,7 +46,7 @@ class BasePgSQLParser:
         # cut off if there is a semicolon
         if sql[-1] == chr(59):
             sql = sql[:-1]
-        default_sql = statement.default_sql(sql)
+        default_sql = fmt.default_sql(sql)
         if self.type == 6:
             self.type = None
             return self.sub_construct_one(default_sql)
@@ -62,7 +62,7 @@ class BasePgSQLParser:
         s_thr = bytes([self.packet[5]])
         s_pos = self.packet[-38:]
 
-        l_two = algorithm.number2bytes(
+        l_two = forge.number2bytes(
             number=len(sql) + 8,
             length=4,
             reverse=False

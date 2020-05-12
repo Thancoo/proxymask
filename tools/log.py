@@ -7,7 +7,7 @@
 
 import logging
 
-logging.critical('blues')
+logging.critical('oracle')
 
 
 
