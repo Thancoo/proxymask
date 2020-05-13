@@ -56,3 +56,7 @@ double_chinese_lastname = [
 ]
 
 
+# Email
+
+email_keys = ['google']
+

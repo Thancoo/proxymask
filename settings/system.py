@@ -5,7 +5,7 @@
 # @IDE      : PyCharm
 
 
-MYSQL_SYSTEM_DATABASE = [
+mysql_system_database = [
     'information_schema',
     'mysql',
     'performance_schema',

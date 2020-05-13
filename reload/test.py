@@ -6,10 +6,21 @@
 
 
 import time
-import os
-from datetime import datetime
-
-while True:
-    reload
+import multiprocessing
 
 
+def func(message: str):
+    print(message)
+    time.sleep(1)
+    print('end')
+
+
+if __name__ == '__main__':
+    pool = multiprocessing.Pool()
+    for i in range(10000):
+        msg = 'hello, %d' % i
+        pool.apply_async(func, (msg,))
+    print('AAA')
+    pool.close()
+    pool.join()
+    print('Dene')

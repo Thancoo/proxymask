@@ -9,15 +9,66 @@
 
 import re
 import random
+import datetime
 
 HEADLINE_DISPLAY = True
 
 
+def check_id_card_is_valid(chinese_id_number: str) -> bool:
+    """
+    check chinese id card is valid
+    :param chinese_id_number:
+    :return:
+    """
+    weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+    check_dict = {
+        0: '1', 1: '0', 2: 'X', 3: '9', 4: '8', 5: '7', 6: '6', 7: '7', 8: '4',
+        9: '3', 10: '2'
+    }
+    total = 0
+    check_data = chinese_id_number[:17]
+    check_bit = chinese_id_number[-1]
+    for i, data in enumerate(check_data):
+        total += int(data) * weight[i]
+    result = check_dict.get(total % 11) == check_bit
+    return result
+
+
+def check_birthday(birthday: str) -> bool:
+    """
+
+    :param birthday:
+    :return:
+    """
+    try:
+        datetime.datetime.strptime(birthday, '%Y%m%d').date()
+    except ValueError:
+        return False
+    else:
+        return '19000101' <= birthday < datetime.date.today().strftime('%Y%m%d')
+
+
+def is_leap_year(year: int) -> bool:
+    """
+
+    :param year:
+    :return:
+    """
+    if year % 4 == 0:
+        if year % 100 == 0:
+            if year % 400 == 0:
+                return True
+            return False
+        return True
+    return False
+
+
 # determine index
+
 
 def determine_index(packet: bytes) -> int:
     """
-    
+
     :param packet:
     :return:
     """
@@ -121,6 +172,26 @@ def bytes2string(packet: bytes) -> str:
     return packet.decode(encoding='utf-8', errors='ignore')
 
 
+def weighted_average(weighted_list: list, value_list: list) -> float:
+    """
+
+    :param weighted_list:
+    :param value_list:
+    :return:
+    """
+    if len(weighted_list) != len(value_list):
+        print('the weight list does not match the value list')
+        return 0
+    total = sum(weighted_list)
+    rate = 0
+    for i in range(len(value_list)):
+        rate += value_list[i] * (weighted_list[i] / total)
+    return rate
+
+
 if __name__ == '__main__':
-    a = random_words()
+    count = [10, 10, 30, 20, 30]
+    value = [100, 80, 60, 100, 100]
+    # print(sum(count))
+    a = weighted_average(count, value)
     print(a)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @Time     : 2020/5/11 16:25
-# @File     : find.py
+# @File     : common.py
 # @IDE      : PyCharm
 
 
@@ -24,6 +24,11 @@ class MySQLFind:
         self.cursor = self.conn.cursor()
 
     def find_database(self, is_system=False):
+        """
+
+        :param is_system:
+        :return:
+        """
         sql = 'show databases'
         databases = list()
         res = self.cursor.execute(sql)
@@ -32,7 +37,7 @@ class MySQLFind:
                 if is_system:
                     databases.append(i[0])
                 else:
-                    if i[0] not in system.MYSQL_SYSTEM_DATABASE:
+                    if i[0] not in system.mysql_system_database:
                         databases.append(i[0])
         return databases
 
