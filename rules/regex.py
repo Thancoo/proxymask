@@ -35,7 +35,9 @@ def varify_id_card(field: str) -> bool:
     """
     field = field.strip()
     # 检查字段长度是否合法
-    if len(field) != 18 or len(field) != 15:
+
+    print(len(field))
+    if len(field) != 18:
         return False
 
     # 检查区域是否合法
@@ -50,4 +52,5 @@ def varify_id_card(field: str) -> bool:
     # 检查身份证编号是否合法
     if forge.check_id_card_is_valid(field):
         return True
+
 

@@ -9,10 +9,11 @@ import pymysql
 import asyncio
 
 from settings import system
+from rules import regex
 
 
 class MySQLFind:
-    def __init__(self, host, port, user, password, database):
+    def __init__(self, host, port, user, password):
         self.conn = pymysql.connect(
             host=host,
             port=port,
@@ -41,8 +42,79 @@ class MySQLFind:
                         databases.append(i[0])
         return databases
 
-    def find_table(self):
+    def find_table(self, database):
+        datebase_list = list()
+        sql = f"select table_name from information_schema.tables where table_schema='{database}' and table_type='base table';"
+        print(sql)
+        # 查询库下面的所有表
+        res = self.cursor.execute(sql)
+        if res:
+            for i in self.cursor.fetchall():
+                datebase_list.append((database, i[0]))
+        print(datebase_list)
+
         pass
+
+    def find_data(self, database, table, limit=2):
+        sensitive_data = dict()
+        fields = list()
+        # 查询单个表中的字段名
+        sql = f"SELECT COLUMN_NAME  FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '{database}' AND TABLE_NAME = '{table}'"
+        self.cursor.execute(sql)
+        for i in self.cursor.fetchall():
+            fields.append(i[0])
+        print(fields)
+        sql = f"select * from {database}.{table} limit {limit}"
+        print(sql)
+        self.cursor.execute(sql)
+        data = self.cursor.fetchall()
+        result = self.check_data(fields, data)
+        print(result)
+
+
+
+
+
+    def check_data(self, columns: list, data: tuple) -> dict:
+        results = self.construct_columns(columns)
+        for item in data:
+            for i in item:
+                i = str(i).strip()
+                if len(i) == 11:
+                    res = regex.varify_mobile_phone(i)
+                    if res:
+                        index = item.index(i)
+                        if results[columns[index]].get('mobile_phone'):
+                            results[columns[index]]['mobile_phone'] += 1
+                        else:
+                            results[columns[index]]['mobile_phone'] = 1
+                if len(i) == 18:
+                    res = regex.varify_id_card(i)
+                    if res:
+                        index = item.index(i)
+                        if results[columns[index]].get('id_card'):
+                            results[columns[index]]['id_card'] += 1
+                        else:
+                            results[columns[index]]['id_card'] = 1
+                if '@' in i and len(i) > 8:
+                    res = regex.varify_email(i)
+                    if res:
+                        index = item.index(i)
+                        if results[columns[index]].get('email'):
+                            results[columns[index]]['email'] += 1
+                        else:
+                            results[columns[index]]['email'] = 1
+
+        return results
+
+    @staticmethod
+    def construct_columns(columns: list) -> dict:
+        res = dict()
+        for i in columns:
+            res[i] = dict()
+        return res
+
+        # 查询单表
 
     def close(self):
         self.cursor.close()
@@ -50,8 +122,8 @@ class MySQLFind:
 
 
 if __name__ == '__main__':
-    a = MySQLFind('192.168.1.181', 3306, 'root', '123456', 'db_mask')
+    a = MySQLFind('192.168.1.100', 3306, 'root', '123456', )
     b = a.find_database()
-    print(b)
 
-
+    c = a.find_data('data', 'user')
+    print(c)
