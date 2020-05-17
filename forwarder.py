@@ -8,7 +8,10 @@
 import sys
 import asyncio
 import traceback
-from analysis import stream
+import multiprocessing
+
+from settings import database
+# from analysis import stream
 from typing import Optional
 from replace import simulation
 
@@ -72,71 +75,55 @@ class ForwarderProtocol(asyncio.Protocol):
     @staticmethod
     def fix_packet(packet: bytes) -> bytes:
         print('AAA')
-        stream_obj = stream.Stream(packet)
-        res = stream_obj.distribute()
 
-        # 需要做修改，进行语句替换
-        print('DDD', res)
-        if isinstance(res, tuple):
-            print('TUP')
-            stmt, parser_obj = res
-
-            # rep_obj = simulation.ReplaceDemo(db=obj)
-            # new_stmt = rep_obj.random(sql=stmt, length=1000)
-
-            new_stmt = '''SELECT "id", "course", "company" FROM "my_schema"."data_course" WHERE "id"<8207700'''
-            data = parser_obj.construct(sql=new_stmt)
-            print('REPR:', repr(data))
-            print(data)
-            packet = data
+        # stream_obj = stream.Stream(packet)
+        # res = stream_obj.distribute()
+        #
+        # # 需要做修改，进行语句替换
+        # print('DDD', res)
+        # if isinstance(res, tuple):
+        #     print('TUP')
+        #     stmt, parser_obj = res
+        #
+        #     # rep_obj = simulation.ReplaceDemo(db=obj)
+        #     # new_stmt = rep_obj.random(sql=stmt, length=1000)
+        #
+        #     new_stmt = '''SELECT "id", "course", "company" FROM "my_schema"."data_course" WHERE "id"<8207700'''
+        #     data = parser_obj.construct(sql=new_stmt)
+        #     print('REPR:', repr(data))
+        #     print(data)
+        #     packet = data
 
         return packet
 
 
-def main() -> None:
-
+def run(name: str, local: str, remote: str):
+    print(f'{name}: {local} -> {remote}')
     loop = asyncio.get_event_loop()
-    # oracle_coroutine = loop.create_server(
-    #     lambda: ForwarderProtocol(
-    #         remote_host='192.168.1.116',
-    #         remote_port=1521
-    #     ),
-    #     host='127.0.0.1',
-    #     port=1522
-    # )
-
-    pgsql_coroutine = loop.create_server(
+    local_list = local.split(':')
+    remote_list = local.split(':')
+    coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host='192.168.1.180',
-            remote_port=5432
+            remote_host=remote_list[0],
+            remote_port=int(remote_list[-1])
         ),
-        host='127.0.0.1',
-        port=5431
+        host=local_list[0],
+        port=int(local_list[-1])
     )
 
-    # mysql_coroutine = loop.create_server(
-    #     lambda: ForwarderProtocol(
-    #         remote_host='192.168.1.180',
-    #         remote_port=3306
-    #     ),
-    #     host='127.0.0.1',
-    #     port=3306
-    # )
-    # server1 = loop.run_until_complete(oracle_coroutine)
-    server2 = loop.run_until_complete(pgsql_coroutine)
-    # server3 = loop.run_until_complete(mysql_coroutine)
-
-    # print(f'Server on {server1.sockets[0].getsockname()}')
-    print(f'Server on {server2.sockets[0].getsockname()}')
-    # print(f'Server on {server3.sockets[0].getsockname()}')
+    server = loop.run_until_complete(coroutine)
     try:
-        # loop.run_until_complete(server1.wait_closed())
-        loop.run_until_complete(server2.wait_closed())
-        # loop.run_until_complete(server3.wait_closed())
+        loop.run_until_complete(server.wait_closed())
     except KeyboardInterrupt as ki:
         sys.stderr.flush()
         traceback.print_exc(ki)
 
 
 if __name__ == '__main__':
-    main()
+    run(*database.services[0])
+    # pool = multiprocessing.Pool()
+    # for i in database.services:
+    #     pool.apply_async(func=run, args=(i[0], i[1],i[2]))
+    # pool.close()
+    # pool.join()
+

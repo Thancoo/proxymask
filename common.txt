@@ -1,0 +1,8 @@
+
+docker 启动 mysql
+
+sudo docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+
+docker 启动 postgres
+
+docker run --name pgsql -p 5432:5432 -e POSTGRES_PASSWORD=123456 -v /root/docker/pgsql:/var/lib/postgresql/data -d postgres

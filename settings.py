@@ -15,6 +15,8 @@ LEVEL = 0
 
 PG_REMOTE_ADDR = ('192.168.1.180', 5432)
 PG_LOCAL_ADDR = ('192.168.1.180', 5432)
+
+
 # 系统库
 PGSQL_SYS_DATABASES = [
     'information_schema',

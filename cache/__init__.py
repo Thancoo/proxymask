@@ -7,14 +7,14 @@
 
 import redis
 
-from settings import dbs
+from settings import database
 
 
 def get_redis() -> redis.Redis:
     pool = redis.ConnectionPool(
-        host=dbs.redis_config['host'],
-        port=dbs.redis_config['port'],
-        password=dbs.redis_config['password'],
+        host=database.redis_config['host'],
+        port=database.redis_config['port'],
+        password=database.redis_config['password'],
     )
     conn = redis.Redis(connection_pool=pool)
     return conn
