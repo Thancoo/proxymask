@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2020/3/26 8:52 下午
 # @Author   : vadon
-# @File     : test.py
+# @File     : replace.py
 # @Software : PyCharm
 
 
 from settings import PGSQL_PASS_KEYS
 from tools import net
 from analysis.stream import Stream
-from oracle import test
-from oracle import one
+from oracle import replace
+from oracle import parse
 from api import one as aa
 from analysis import gg
 
@@ -22,8 +22,8 @@ from analysis import gg
 b = b'\0xffhello, world'
 # a = other.bytes2string(b)
 
-print(test.Test)
-print(one.Test)
+print(replace.Test)
+print(parse.Test)
 print(aa.One)
 print(gg.GoodGame)
 print(Stream)

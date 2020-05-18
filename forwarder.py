@@ -8,12 +8,9 @@
 import sys
 import asyncio
 import traceback
-import multiprocessing
-
-from settings import database
 # from analysis import stream
 from typing import Optional
-from replace import simulation
+# from replace import simulation
 
 
 class ConnectionProtocol(asyncio.Protocol):
@@ -75,7 +72,6 @@ class ForwarderProtocol(asyncio.Protocol):
     @staticmethod
     def fix_packet(packet: bytes) -> bytes:
         print('AAA')
-
         # stream_obj = stream.Stream(packet)
         # res = stream_obj.distribute()
         #
@@ -97,33 +93,44 @@ class ForwarderProtocol(asyncio.Protocol):
         return packet
 
 
-def run(name: str, local: str, remote: str):
-    print(f'{name}: {local} -> {remote}')
+def main() -> None:
     loop = asyncio.get_event_loop()
-    local_list = local.split(':')
-    remote_list = local.split(':')
-    coroutine = loop.create_server(
+    oracle_coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host=remote_list[0],
-            remote_port=int(remote_list[-1])
+            remote_host='192.168.1.116',
+            remote_port=1521
         ),
-        host=local_list[0],
-        port=int(local_list[-1])
+        host='127.0.0.1',
+        port=1520
     )
 
-    server = loop.run_until_complete(coroutine)
+    pgsql_coroutine = loop.create_server(
+        lambda: ForwarderProtocol(
+            remote_host='192.168.1.102',
+            remote_port=5432
+        ),
+        host='127.0.0.1',
+        port=5431
+    )
+
+    mysql_coroutine = loop.create_server(
+        lambda: ForwarderProtocol(
+            remote_host='192.168.1.102',
+            remote_port=3306
+        ),
+        host='127.0.0.1',
+        port=3305
+    )
+    tasks = [oracle_coroutine, pgsql_coroutine, mysql_coroutine]
+    servers = loop.run_until_complete(asyncio.gather(*tasks))
+
     try:
-        loop.run_until_complete(server.wait_closed())
+        for i in servers:
+            loop.run_until_complete(i.wait_closed())
     except KeyboardInterrupt as ki:
         sys.stderr.flush()
         traceback.print_exc(ki)
 
 
 if __name__ == '__main__':
-    run(*database.services[0])
-    # pool = multiprocessing.Pool()
-    # for i in database.services:
-    #     pool.apply_async(func=run, args=(i[0], i[1],i[2]))
-    # pool.close()
-    # pool.join()
-
+    main()

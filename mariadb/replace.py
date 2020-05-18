@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time     : 2020/4/15 14:24
+# @Time     : 2020/5/18 18:44
 # @File     : replace.py
 # @IDE      : PyCharm
 
 
-import urllib3
-
-
+def replace(sql: str):
+    return 'select * from data'

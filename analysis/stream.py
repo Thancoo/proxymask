@@ -4,45 +4,69 @@
 # @File     : stream.py
 # @IDE      : PyCharm
 
-
 import settings
 
 from analysis import pgsql
-from analysis import mysql
+from settings import system
+from pgsql.parse import PgSQLParser
+from oracle.parse import OracleParser
+from mysql.parse import MySQLParser
+
+
+ORACLE_ID = 1
+MYSQL_ID = 2
+PGSQL_ID = 3
+MARIADB_ID = 4
+SQLLITE = 5
+DB2_ID = 6
+SQLSERVER_ID = 7
 
 
 class Stream:
+    def __init__(self):
+        self.packet = bytes()
+        self.data = self.packet.upper()
 
-    def __init__(self, packet: bytes) -> None:
+    def distribute(self, packet: bytes) -> bytes:
         self.packet = packet
+        # too short packet
+        if len(self.packet) < system.LIMIT_LENGTH:
+            return self.packet
 
-    def distribute(self) -> (tuple, str):
-        if len(self.packet) < settings.LIMIT_LENGTH:
-            return
-        if self.is_select_statement():
-            # pgsql
-            if self.get_database == 'pgsql':
-                obj = pgsql.BasePgSQLParser(packet=self.packet)
-                if obj.exclude():
-                    return self.packet
-                statement = obj.get_sql()
-                print('CCC:', statement, obj)
-                return statement, obj
+        if self._is_query():
+            obj = self._determine_database()
+            new_packet = obj().dispatch(self.packet)
+            return new_packet
+        return self.packet
 
-            # mysql
-            elif self.get_database == 'mysql':
-                pass
-
-    def is_select_statement(self):
+    def _is_query(self):
         keys = ['SELECT', 'FROM']
-        b_keys = [i.encode('utf-8') for i in keys]
-        if all(i in self.packet for i in b_keys):
+        bytes_keys = [i.encode('utf-8') for i in keys]
+        if all(i in self.packet for i in bytes_keys):
             return True
 
-    @property
-    def get_database(self):
-        if self.packet:
-            return 'pgsql'
+    def _determine_database(self):
+
+        if self._is_oracle():
+            return OracleParser
+
+        elif self._is_pgsql():
+            return PgSQLParser
+
+        elif self._is_mysql():
+            return MySQLParser
+
+    def _is_oracle(self) -> bool:
+        return True
+
+    def _is_pgsql(self) -> bool:
+        return True
+
+    def _is_mysql(self) -> bool:
+        return True
+
+    def _is_mariadb(self) -> bool:
+        return True
 
 
 if __name__ == '__main__':
