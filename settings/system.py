@@ -10,21 +10,26 @@
 LIMIT_LENGTH = 20
 
 
+
+
+# Oracle
+ORACLE_PASS_KEYS = [
+    '',
+]
+# MySQL
 mysql_system_database = [
     'information_schema',
     'mysql',
     'performance_schema',
 ]
 
-# Oracle
-ORACLE_PASS_KEYS = [
-    '',
+MySQL_PASS_KEYS = [
+    ''
 ]
-
 
 # Postgres
 PGSQL_PASS_KEYS = [
-    '',
+    'INFORMATION_SCHEMA',
 ]
 
 

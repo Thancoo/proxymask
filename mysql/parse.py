@@ -4,18 +4,36 @@
 # @File     : parse.py
 # @IDE      : PyCharm
 
+
+from tools import fmt
 from tools import forge
 from mysql import replace
+from settings import system
 
 
 class MySQLParser:
-    # Must be upper
-    pass_keys = [
-        'INFORMATION_SCHEMA',
-    ]
 
     def __init__(self):
         self.packet = bytes()
+        self.data = self.packet.upper()
+        self.index = int()
+        self.code = int()
+
+    def _exclude(self) -> bool:
+        pass_keys = [i.encode().upper() for i in system.MySQL_PASS_KEYS]
+        if any(i in self.data for i in pass_keys):
+            return True
+
+    def _determine(self):
+        """
+
+        :return:
+        """
+        select_index = self.data.find(b'SELECT')
+        create_index = self.data.find(b'CREATE')
+        if create_index != -1 and create_index < select_index:
+            self.index = create_index
+        self.index = select_index
 
     def dispatch(self, packet: bytes) -> bytes:
         """
@@ -24,24 +42,16 @@ class MySQLParser:
         :return:
         """
         self.packet = packet
-        if any(bytes(i) in self.packet.upper() for i in self.pass_keys):
+        self._determine()
+        if self._exclude():
             return self.packet
-        index, code = self._determine()
-        if index in [5, ] and code == 0:
-            r_sql = self.packet[5:]
-            sql = str(r_sql)
-            replace_sql = replace.test(sql)
-            return self._constructor_one(replace_sql)
 
-    def _determine(self) -> (int, int):
-        """
+        if self.index in [5, ] and self.code == 0:
+            _sql = fmt.default_sql(self.packet[self.index:].decode())
+            sql = replace.replace(_sql)
+            return self._construct(sql)
 
-        :return:
-        """
-        index = forge.determine_index(self.packet)
-        return index, 0
-
-    def _constructor_one(self, sql: str) -> bytes:
+    def _construct(self, sql: str) -> bytes:
         """
         dbv, plsql, navicat, jetbrains
         :param sql:

@@ -11,7 +11,7 @@ from settings import system
 from pgsql.parse import PgSQLParser
 from oracle.parse import OracleParser
 from mysql.parse import MySQLParser
-
+from mariadb.parse import MariaDBParser
 
 ORACLE_ID = 1
 MYSQL_ID = 2
@@ -41,7 +41,7 @@ class Stream:
 
     def _is_query(self):
         keys = ['SELECT', 'FROM']
-        bytes_keys = [i.encode('utf-8') for i in keys]
+        bytes_keys = [i.encode() for i in keys]
         if all(i in self.packet for i in bytes_keys):
             return True
 
@@ -55,6 +55,9 @@ class Stream:
 
         elif self._is_mysql():
             return MySQLParser
+
+        elif self._is_mariadb():
+            return MariaDBParser()
 
     def _is_oracle(self) -> bool:
         return True
@@ -71,5 +74,5 @@ class Stream:
 
 if __name__ == '__main__':
     select = ['SELECT', 'FROM']
-    b_select = [i.encode('utf-8') for i in ['SELECT', 'FROM']]
+    b_select = [i.encode() for i in ['SELECT', 'FROM']]
     print(b_select)

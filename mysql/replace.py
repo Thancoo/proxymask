@@ -5,5 +5,5 @@
 # @IDE      : PyCharm
 
 
-def test(sql: str) -> str:
-    return 'select * from data_teacher'
+def replace(sql: str):
+    return 'select * from data'

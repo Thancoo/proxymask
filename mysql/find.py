@@ -71,12 +71,10 @@ class MySQLFind:
         result = self.check_data(fields, data)
         print(result)
 
-
-
-
-
+    # mysql_schema table:'zx', fileds:node, type:1, query:10, sure:5
+    # 数据库 模式名（库名） 数据表 字段名 字段类型 查询条数 确定数
     def check_data(self, columns: list, data: tuple) -> dict:
-        results = self.construct_columns(columns)
+        results = self.construct_columns(columns)  # type: dict
         for item in data:
             for i in item:
                 i = str(i).strip()
@@ -114,8 +112,7 @@ class MySQLFind:
             res[i] = dict()
         return res
 
-        # 查询单表
-
+    # 查询单表
     def close(self):
         self.cursor.close()
         self.conn.close()

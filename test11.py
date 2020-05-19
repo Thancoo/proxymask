@@ -29,3 +29,4 @@ b = 'hello'.encode()
 print(b)
 print(type(b))
 
+
