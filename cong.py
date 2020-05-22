@@ -5,13 +5,7 @@
 # @IDE      : PyCharm
 
 
-import toml
+import symbol
 
-my_file = 'settings/my.toml'
-a = toml.load(my_file)
-print(type(a))
-print(a)
 
-l = 1
-
-print(bytes(l))
+print(symbol)

@@ -61,4 +61,5 @@ class MySQLParser:
         r_sql = bytes(sql)
         l_one = forge.number2bytes(number=len(sql) + 1, length=4, reverse=True)
         packet = l_one + s_two + r_sql
+
         return packet
