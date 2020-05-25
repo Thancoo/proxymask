@@ -20,7 +20,6 @@ def post_data():
     return jsonify(recognize_info), 201
 
 
-
 if __name__ == '__main__':
     print('Begin')
     app.run(debug=False, host='localhost', port=8888)
