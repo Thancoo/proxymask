@@ -13,5 +13,13 @@ print(symbol)
 print(symbol.compound_stmt)
 print(symbol.atom)
 print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
+print(symbol.expr)
 
 
