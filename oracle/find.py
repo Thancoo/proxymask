@@ -17,3 +17,11 @@ class OracleFindData:
 
     def find_table(self):
         pass
+
+
+class Node:
+    def __init__(self, packet):
+        self.packet = packet
+
+    def determine(self):
+        pass
