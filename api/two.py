@@ -23,6 +23,7 @@ async def test(request):
 async def node(request):
     print(request)
     dic = {'one': 'aaa'}
+    return json(dic)
 
 
 if __name__ == '__main__':
