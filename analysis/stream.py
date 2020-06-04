@@ -48,6 +48,8 @@ class Stream:
     def _determine_database(self):
 
         if self._is_oracle():
+            if self.packet == chr(1):
+                return None
             return OracleParser
 
         elif self._is_pgsql():
