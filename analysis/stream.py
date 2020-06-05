@@ -56,6 +56,8 @@ class Stream:
             return PgSQLParser
 
         elif self._is_mysql():
+            if self.packet is None:
+                return
             return MySQLParser
 
         elif self._is_mariadb():
