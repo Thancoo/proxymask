@@ -109,6 +109,8 @@ print(json.loads(dd))
 
 print(bytes(1))
 
+print(1234)
+
 
 
 

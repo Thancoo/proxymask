@@ -80,3 +80,4 @@ if __name__ == '__main__':
     select = ['SELECT', 'FROM']
     b_select = [i.encode() for i in ['SELECT', 'FROM']]
     print(b_select)
+
