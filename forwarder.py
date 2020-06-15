@@ -106,11 +106,11 @@ def main() -> None:
 
     pgsql_coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host='192.168.1.102',
+            remote_host='192.168.0.219',
             remote_port=5432
         ),
         host='127.0.0.1',
-        port=5431
+        port=5432
     )
 
     mysql_coroutine = loop.create_server(
