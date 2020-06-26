@@ -12,7 +12,7 @@ from tools import forge
 
 
 class BaseMysqlParser:
-    def __init__(self, packet:bytes):
+    def __init__(self, packet: bytes):
         self.packet = packet
         self.type = None
 
@@ -25,5 +25,3 @@ class BaseMysqlParser:
         index = fmt.determine_index(self.packet)
         self.type = index
         # if self.type == 6 and self.
-
-

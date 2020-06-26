@@ -12,6 +12,11 @@ def default_sql(sql: str, keyword_case='upper', strip_comments=True) -> str:
 
 
 def determine_index(data: bytes) -> int:
+    """
+    determine the location from common packet
+    :param data: common packet, such as oracle, mysql
+    :return: the index of sql statement
+    """
     select = data.upper().find(b'SELECT')
     create = data.upper().find(b'CREATE')
     if select != -1 and create != -1:
@@ -39,7 +44,9 @@ class Extractor:
         return self.sql.strip(' \t\n')
 
 
-
 if __name__ == '__main__':
-    index = determine_index('acreatsesdfsdfsafasselect * from table')
+    index = determine_index(b'acreatsesdfsdfsafasselect * from table')
     print(index)
+
+    sql = '   select     *     from      node where       id =1 '
+    print(default_sql(sql))

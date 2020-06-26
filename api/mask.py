@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2020/5/31 2:12 下午
 # @Author   : vadon
-# @File     : app.py
+# @File     : mask.py
 # @Software : PyCharm
 
 from sanic.response import json

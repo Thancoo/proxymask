@@ -10,6 +10,8 @@ import asyncio
 import traceback
 # from analysis import stream
 from typing import Optional
+
+
 # from replace import simulation
 
 
@@ -75,7 +77,7 @@ class ForwarderProtocol(asyncio.Protocol):
         # stream_obj = stream.Stream(packet)
         # res = stream_obj.distribute()
         #
-        # # 需要做修改，进行语句替换
+        # 需要做修改，进行语句替换
         # print('DDD', res)
         # if isinstance(res, tuple):
         #     print('TUP')
@@ -95,9 +97,10 @@ class ForwarderProtocol(asyncio.Protocol):
 
 def main() -> None:
     loop = asyncio.get_event_loop()
+
     oracle_coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host='192.168.1.116',
+            remote_host='192.168.1.10',
             remote_port=1521
         ),
         host='127.0.0.1',
@@ -106,7 +109,7 @@ def main() -> None:
 
     pgsql_coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host='192.168.0.219',
+            remote_host='192.168.1.10',
             remote_port=5432
         ),
         host='127.0.0.1',
@@ -115,13 +118,13 @@ def main() -> None:
 
     mysql_coroutine = loop.create_server(
         lambda: ForwarderProtocol(
-            remote_host='192.168.1.102',
+            remote_host='192.168.1.10',
             remote_port=3306
         ),
         host='127.0.0.1',
-        port=3305
+        port=3306
     )
-    tasks = [oracle_coroutine, pgsql_coroutine, mysql_coroutine]
+    tasks = [mysql_coroutine, pgsql_coroutine, oracle_coroutine]
     servers = loop.run_until_complete(asyncio.gather(*tasks))
 
     try:
