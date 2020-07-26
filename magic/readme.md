@@ -18,7 +18,7 @@ class Test:
 
 if __name__ == '__main__':
     t = Test()
-    print(t(100, 'string'))
+    print(t(100, 'string'))k
 ```
 ```text
 the value is 100string
