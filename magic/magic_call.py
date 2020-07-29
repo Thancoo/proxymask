@@ -2,7 +2,7 @@
 # @Time     : 2020/7/26 4:43 下午
 # @Author   : vadon
 # @Email    : vadonical@gmail.com
-# @File     : magic_method.py
+# @File     : magic_call.py
 # @Project  : proxymask
 
 
