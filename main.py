@@ -56,6 +56,11 @@ async def write_cookie(request):
     return response
 
 
+def init():
+    return 1
+
+
 if __name__ == '__main__':
+    init()
     app.blueprint(blueprint)
     app.run(host='0.0.0.0', port=9000)
