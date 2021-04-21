@@ -1,12 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-# @Time     : 2020/3/24 8:46 下午
-# @Author   : vadonical
-# @Email    : vadonical@gmail.com
-# @File     : pgsql.py
-# @Software : PyCharm
-
-
 import re
 import random
 import datetime
@@ -152,6 +143,7 @@ def split_string_by_length(string: str, length: int) -> list:
 def headline(header: str, separator='-', length=80):
     """
     Dividing line of separating program running steps by string
+
     :param header: string you want to separate
     :param separator: separator symbols
     :param length: the length of the dividing line

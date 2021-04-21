@@ -1,11 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-# @Time     : 2020/3/24 9:51 下午
-# @Author   : vadon
-# @File     : mysql.py
-# @Software : PyCharm
-
-
 import settings
 from tools import fmt
 from tools import forge

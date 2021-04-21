@@ -1,9 +1,9 @@
 import sqlparse
 
 
-def default_sql(sql: str, keyword_case='upper', strip_comments=True) -> str:
+def default_sql(statement: str, keyword_case='upper', strip_comments=True) -> str:
     return sqlparse.format(
-        sql=sql,
+        sql=statement,
         encoding='utf-8',
         reindent=True,
         keyword_case=keyword_case,
@@ -14,6 +14,7 @@ def default_sql(sql: str, keyword_case='upper', strip_comments=True) -> str:
 def determine_index(data: bytes) -> int:
     """
     determine the location from common packet
+
     :param data: common packet, such as oracle, mysql
     :return: the index of sql statement
     """
@@ -28,25 +29,6 @@ def determine_index(data: bytes) -> int:
     return -1
 
 
-class Extractor:
-    def __init__(self, sql_statement):
-        self.sql = sqlparse.format(
-            sql=sql_statement,
-            reindent=True,
-            keyword_case='upper'
-        )
-        self._table_names = set()
-        self._alias_names = set()
-        self._limit = None
-        self._parsed = sqlparse.parse()
-
-    def strip(self):
-        return self.sql.strip(' \t\n')
-
-
 if __name__ == '__main__':
-    index = determine_index(b'acreatsesdfsdfsafasselect * from table')
-    print(index)
-
     sql = '   select     *     from      node where       id =1 '
     print(default_sql(sql))

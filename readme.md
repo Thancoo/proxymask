@@ -1,3 +1,3 @@
-# dbmask
+# proxy mask
 
 Data desensitization service, continuously updated...
